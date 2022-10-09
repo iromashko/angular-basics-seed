@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <div class="app">
-      <h1 (click)="handleClick($event)">
+      <h1 (click)="handleClick($event)" #heading>
         {{ newMessage }}
       </h1>
 
-      <input [value]="message" (input)="handleInput($event)" />
+      <input
+        [value]="message"
+        (input)="newMessage = messageInput.value"
+        #messageInput
+      />
+
+      <p>{{ heading.innerText }}</p>
     </div>
   `,
   styles: [
@@ -32,13 +38,5 @@ export class AppComponent implements OnInit {
 
   handleClick(event: Event): void {
     console.log(`clicked`, event);
-  }
-
-  handleInput(event: Event): void {
-    const { value } = event.target as HTMLInputElement;
-
-    this.newMessage = value;
-
-    console.log(value);
   }
 }
