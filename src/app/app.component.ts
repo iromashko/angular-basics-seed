@@ -1,20 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <div class="app">
-      <h1 (click)="handleClick($event)" #heading>
-        {{ newMessage }}
-      </h1>
-
-      <input
-        [value]="message"
-        (input)="newMessage = messageInput.value"
-        #messageInput
-      />
-
-      <p>{{ heading.innerText }}</p>
+      <app-donut-list></app-donut-list>
     </div>
   `,
   styles: [
