@@ -1,10 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Donut } from '../../models/donut.model';
 
 @Component({
   selector: 'app-donut-card',
   template: `
-    <div class="donut-card">
+    <div
+      class="donut-card"
+      [style.border]="donut.promo ? '2px solid #eee' : 'none'"
+    >
       <img
         src="/assets/img/{{ donut.icon }}.svg"
         [alt]="donut.name"
@@ -52,6 +55,9 @@ import { Donut } from '../../models/donut.model';
       }
     `,
   ],
+  host: {
+    class: 'donut-card',
+  },
 })
 export class DonutCardComponent {
   @Input() donut!: Donut;
