@@ -4,10 +4,7 @@ import { Donut } from '../../models/donut.model';
 @Component({
   selector: 'app-donut-card',
   template: `
-    <div
-      class="donut-card"
-      [style.border]="donut.promo ? '2px solid #eee' : 'none'"
-    >
+    <div class="donut-card" [ngClass]="{ 'donut-card-promo': donut.promo }">
       <img
         src="/assets/img/{{ donut.icon }}.svg"
         [alt]="donut.name"
@@ -19,7 +16,7 @@ import { Donut } from '../../models/donut.model';
           {{ donut.name }}
         </p>
         <p class="donut-card-price">
-          {{ donut.price }}
+          {{ donut.price / 100 | currency: "RUB": '₽' }}
         </p>
       </div>
     </div>
@@ -51,6 +48,10 @@ import { Donut } from '../../models/donut.model';
         &-icon {
           width: 50px;
           margin-right: 10px;
+        }
+
+        &-promo {
+          border: 2px solid #eee;
         }
       }
     `,
