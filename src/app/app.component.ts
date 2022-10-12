@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
       <header class="header">
         <img src="/assets/img/logo.svg" alt="" class="logo">
       </header>
-      <app-donut-list></app-donut-list>
+      <app-donut-single></app-donut-single>
     </div>
   `,
   styles: [
