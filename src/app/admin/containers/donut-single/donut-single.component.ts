@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Donut } from '../../models/donut.model';
+import { DonutService } from '../../services/donut.service';
 
 @Component({
   selector: 'app-donut-single',
   template: `
     <div>
-      <app-donut-form [donut]="donut" (create)="submitForm($event)"></app-donut-form>
+      <app-donut-form
+        [donut]="donut"
+        (create)="createDonut($event)"
+        (update)="updateDonut($event)"
+        (delete)="deleteDonut($event)"
+      ></app-donut-form>
     </div>
   `,
   styles: [],
@@ -14,20 +19,28 @@ import { Donut } from '../../models/donut.model';
 export class DonutSingleComponent implements OnInit {
   donut!: Donut;
 
-  constructor() {}
+  constructor(private donutService: DonutService) {}
 
   ngOnInit(): void {
-    this.donut = {
-      id: 'y8z0As',
-      name: 'Just Chocolate',
-      icon: 'just-chocolate',
-      price: 119,
-      promo: 'limited',
-      description: 'For the pure chocoholic.',
-    };
+    const id = 'Cr_lPfl';
+
+    this.donutService.getDonut(id).subscribe((donut) => {
+      this.donut = donut;
+    });
   }
 
-  submitForm(donut: Donut): void {
-    console.log(donut);
+  createDonut(donut: Donut): void {
+    this.donutService.addDonut(donut);
+  }
+
+  updateDonut(donut: Donut): void {
+    console.log(`update`, donut);
+    this.donutService
+      .updateDonut(donut)
+      .subscribe(() => console.log(`update succesfull`));
+  }
+
+  deleteDonut(donut: Donut): void {
+    this.donutService.deleteDonut(donut).subscribe((d) => console.log(`donut deleted`, d));
   }
 }

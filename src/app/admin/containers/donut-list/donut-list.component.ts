@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Donut } from '../../models/donut.model';
+import { DonutService } from '../../services/donut.service';
 
 @Component({
   selector: 'app-donut-list',
   template: `
     <div>
-      <ng-container *ngIf="donuts.length; else nothing">
+      <ng-container *ngIf="donuts?.length; else nothing">
         <app-donut-card
           *ngFor="let donut of donuts; trackBy: trackById"
           [donut]="donut"
@@ -20,53 +21,17 @@ import { Donut } from '../../models/donut.model';
   styles: [],
 })
 export class DonutListComponent implements OnInit {
-  donuts!: Donut[];
+  donuts: Donut[] = [];
 
-  constructor() {}
+  constructor(private donutService: DonutService) {}
 
   ngOnInit(): void {
-    this.donuts = [
-      {
-        id: 'y8z0As',
-        name: 'Just Chocolate',
-        icon: 'just-chocolate',
-        price: 119,
-        promo: 'limited',
-        description: 'For the pure chocoholic.',
-      },
-      {
-        id: '3y98K1',
-        name: 'Glazed Fudge',
-        icon: 'glazed-fudge',
-        price: 129,
-        promo: 'new',
-        description: 'Stiky perfection.',
-      },
-      {
-        id: 'ae098s',
-        name: 'Caramel Swirl',
-        icon: 'caramel-swirl',
-        price: 29,
-        description: 'Chocolate drizzled with caramel.',
-      },
-      {
-        id: '8amkZ9',
-        name: 'Sour Supreme',
-        icon: 'sour-supreme',
-        price: 139,
-        description: 'Four the sour advocate.',
-      },
-      {
-        id: 'l3M0nz',
-        name: 'Zesty Lemon',
-        icon: 'zesty-lemon',
-        price: 89,
-        description: 'Delicious lucious lemon.',
-      },
-    ];
+    this.donutService.getDonuts().subscribe((donuts) => {
+      this.donuts = donuts;
+    });
   }
 
-  trackById(index: number, donut: Donut) {
+  trackById(_: number, donut: Donut) {
     return donut.id;
   }
 }
