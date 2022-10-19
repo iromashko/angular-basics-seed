@@ -1,10 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { filter, map, Observable, of, tap } from 'rxjs';
+import {
+  catchError,
+  EMPTY,
+  filter,
+  map,
+  Observable,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Donut } from '../models/donut.model';
 
 @Injectable({
-  providedIn: null,
+  providedIn: 'root',
 })
 export class DonutService {
   private donuts: Donut[] = [];
@@ -16,9 +25,10 @@ export class DonutService {
       return of(this.donuts);
     }
 
-    return this.http
-      .get<Donut[]>(`api/donuts`)
-      .pipe(tap((donuts) => (this.donuts = donuts)));
+    return this.http.get<Donut[]>(`api/donuts`).pipe(
+      tap((donuts) => (this.donuts = donuts)),
+      catchError(this.handleError)
+    );
   }
 
   getDonut(id: string): Observable<Donut> {
@@ -36,7 +46,8 @@ export class DonutService {
           price: 0,
           description: '',
         };
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
@@ -44,7 +55,8 @@ export class DonutService {
     return this.http.post<Donut>(`/api/donuts`, donut).pipe(
       tap((donut) => {
         this.donuts = [...this.donuts, donut];
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
@@ -57,7 +69,8 @@ export class DonutService {
           }
           return oldDonut;
         });
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
@@ -65,7 +78,17 @@ export class DonutService {
     return this.http.delete<Donut>(`/api/donuts/${oldDonut.id}`).pipe(
       tap((donut) => {
         this.donuts = this.donuts.filter((d) => d.id !== donut.id);
-      })
+      }),
+      catchError(this.handleError)
     );
+  }
+
+  private handleError(err: HttpErrorResponse | ErrorEvent) {
+    if (err instanceof ErrorEvent) {
+      console.warn(`Client`, err.message);
+    } else {
+      console.warn(`Server`, err.status);
+    }
+    return throwError((err: HttpErrorResponse) => new Error(err.message));
   }
 }
