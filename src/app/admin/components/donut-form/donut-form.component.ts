@@ -118,21 +118,22 @@ import { Donut } from '../../models/donut.model';
         </div>
       </ng-container>
 
-      <button type="button" class="btn btn--green" (click)="handleCreate(form)">
+      <button *ngIf="!isEdit" type="button" class="btn btn--green" (click)="handleCreate(form)">
         Create
       </button>
       <button
         type="button"
         [disabled]="form.untouched"
+        *ngIf="isEdit"
         class="btn btn--green"
         (click)="handleUpdate(form)"
       >
         Update
       </button>
-      <button type="button" class="btn btn--red" (click)="deleteDonut()">
+      <button type="button" class="btn btn--red"*ngIf="isEdit" (click)="deleteDonut()">
         Delete
       </button>
-      <button type="button" class="btn btn--grey" (click)="form.reset()">
+      <button type="button" class="btn btn--grey" *ngIf="form.touched || isEdit" (click)="form.reset()">
         Reset Form
       </button>
 
@@ -141,9 +142,7 @@ import { Donut } from '../../models/donut.model';
       </div>
     </form>
 
-    <ng-template #loading>
-      Loading...
-    </ng-template>
+    <ng-template #loading> Loading... </ng-template>
   `,
   styles: [
     `
@@ -184,6 +183,7 @@ import { Donut } from '../../models/donut.model';
 })
 export class DonutFormComponent {
   @Input() donut!: Donut;
+  @Input() isEdit!: boolean;
   @Output() create = new EventEmitter<Donut>();
   @Output() update = new EventEmitter<Donut>();
   @Output() delete = new EventEmitter<Donut>();

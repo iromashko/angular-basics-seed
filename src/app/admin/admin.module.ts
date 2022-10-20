@@ -6,7 +6,33 @@ import { DonutSingleComponent } from './containers/donut-single/donut-single.com
 import { DonutFormComponent } from './components/donut-form/donut-form.component';
 import { FormsModule } from '@angular/forms';
 import { DonutService } from './services/donut.service';
-import { HttpClientModule } from '@angular/common/http';
+import { Route, RouterModule } from '@angular/router';
+
+const routes: Route[] = [
+  {
+    path: 'donuts',
+    component: DonutListComponent,
+  },
+  {
+    path: 'donuts/new',
+    component: DonutSingleComponent,
+    data: {
+      isEdit: false
+    }
+  },
+  {
+    path: 'donuts/:id',
+    component: DonutSingleComponent,
+    data: {
+      isEdit: true
+    }
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'donuts',
+  },
+];
 
 @NgModule({
   declarations: [
@@ -15,8 +41,11 @@ import { HttpClientModule } from '@angular/common/http';
     DonutSingleComponent,
     DonutFormComponent,
   ],
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  exports: [DonutListComponent, DonutSingleComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule.forChild(routes),
+  ],
   providers: [DonutService],
 })
 export class AdminModule {}

@@ -7,12 +7,9 @@ import { Injectable } from '@angular/core';
 import {
   catchError,
   delay,
-  EMPTY,
-  filter,
   map,
   Observable,
   of,
-  retry,
   retryWhen,
   take,
   tap,
@@ -48,7 +45,7 @@ export class DonutService {
     );
   }
 
-  getDonut(id: string): Observable<Donut> {
+  getDonut(id: string | null): Observable<Donut> {
     return this.getDonuts().pipe(
       map((donuts) => {
         const donut = donuts.find((donut) => donut.id === id);
