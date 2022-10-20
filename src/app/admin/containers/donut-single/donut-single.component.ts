@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs';
 import { Donut } from '../../models/donut.model';
 import { DonutService } from '../../services/donut.service';
@@ -25,6 +25,7 @@ export class DonutSingleComponent implements OnInit {
 
   constructor(
     private donutService: DonutService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -39,13 +40,15 @@ export class DonutSingleComponent implements OnInit {
   }
 
   createDonut(donut: Donut): void {
-    this.donutService.addDonut(donut);
+    this.donutService
+      .addDonut(donut)
+      .subscribe((d) => this.router.navigate(['admin', 'donuts', d.id]));
   }
 
   updateDonut(donut: Donut): void {
     console.log(`update`, donut);
     this.donutService.updateDonut(donut).subscribe({
-      next: () => console.log(`update succesfull`),
+      next: () => this.router.navigate(['admin']),
       error: (err) => console.log(err),
     });
   }
@@ -53,6 +56,6 @@ export class DonutSingleComponent implements OnInit {
   deleteDonut(donut: Donut): void {
     this.donutService
       .deleteDonut(donut)
-      .subscribe((d) => console.log(`donut deleted`, d));
+      .subscribe(() => this.router.navigate(['admin']));
   }
 }

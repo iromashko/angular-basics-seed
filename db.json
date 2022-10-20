@@ -24,18 +24,19 @@
       "description": "Chocolate drizzled with caramel."
     },
     {
-      "id": "8amkZ9",
-      "name": "Sour Supreme",
-      "icon": "sour-supreme",
-      "price": 139,
-      "description": "Four the sour advocate."
-    },
-    {
       "id": "l3M0nz",
       "name": "Zesty Lemon",
       "icon": "zesty-lemon",
       "price": 89,
       "description": "Delicious lucious lemon."
+    },
+    {
+      "name": "iromashko",
+      "icon": "glazed-fudge",
+      "price": 33,
+      "promo": "new",
+      "description": "33333",
+      "id": "JW7Vs8Z"
     }
   ]
 }
