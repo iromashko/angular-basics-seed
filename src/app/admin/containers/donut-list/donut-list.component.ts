@@ -1,13 +1,18 @@
+import { NgForOf, NgIf, NgSwitch } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { DonutCardComponent } from '../../components/donut-card/donut-card.component';
 import { Donut } from '../../models/donut.model';
 import { DonutService } from '../../services/donut.service';
 
 @Component({
   selector: 'app-donut-list',
+  imports: [RouterModule, DonutCardComponent, NgForOf, NgIf],
+  standalone: true,
   template: `
     <div>
       <div class="donut-list-actions">
-        <a routerLink="new" class="btn btn--green">
+        <a [routerLink]="'new'" class="btn btn--green">
           New Donut
 
           <img src="/assets/img/icon/plus.svg" />

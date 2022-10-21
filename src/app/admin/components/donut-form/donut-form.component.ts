@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Donut } from '../../models/donut.model';
 
 @Component({
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   selector: 'app-donut-form',
   template: `
     <form class="donut-form" #form="ngForm" *ngIf="donut; else loading">
