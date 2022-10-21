@@ -31,12 +31,12 @@
       "description": "Delicious lucious lemon."
     },
     {
-      "name": "iromashko",
-      "icon": "glazed-fudge",
-      "price": 33,
+      "id": "JW7Vs8Z",
+      "name": "Famous Donut",
+      "icon": "sour-supreme",
+      "price": 333,
       "promo": "new",
-      "description": "33333",
-      "id": "JW7Vs8Z"
+      "description": "33333"
     }
   ]
 }

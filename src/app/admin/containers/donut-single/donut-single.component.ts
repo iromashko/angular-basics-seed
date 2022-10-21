@@ -7,6 +7,7 @@ import { DonutService } from '../../services/donut.service';
 @Component({
   standalone: true,
   imports: [DonutFormComponent],
+  providers: [DonutService],
   selector: 'app-donut-single',
   template: `
     <div>

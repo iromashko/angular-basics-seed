@@ -7,6 +7,7 @@ import { DonutService } from '../../services/donut.service';
 
 @Component({
   selector: 'app-donut-list',
+  providers: [DonutService],
   imports: [RouterModule, DonutCardComponent, NgForOf, NgIf],
   standalone: true,
   template: `
